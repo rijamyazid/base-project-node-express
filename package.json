@@ -18,5 +18,8 @@
     "nodemon": "^3.1.0",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
   }
 }
