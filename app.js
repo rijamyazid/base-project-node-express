@@ -6,6 +6,8 @@ const logger = require('morgan')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger-output.json')
 
+const responseService = require('./app/services/response-service')
+
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/user-router')
 
@@ -16,6 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(responseService)
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)

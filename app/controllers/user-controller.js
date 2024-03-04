@@ -1,19 +1,28 @@
-const {
-  User
-} = require('../../db/models')
+const { User } = require('../../db/models')
+const catchAsync = require('../services/catch-function-error-service')
+const HTTPStatusCode = require('../enums/http-status-code-enum') //eslint-disable-line
 
-exports.getUser = async (req, res) => {
+exports.users = catchAsync(async (req, res) => {
   /*
     #swagger.tags = ['Base']
     #swagger.description = 'Endpoint to get user data'
-  */
-  const users = await User.findAll() //eslint-disable-line
-  /*
+
     #swagger.responses[200] = {
       schema : {
-        text : 'string'
+        status : true,
+        messages : ['string'],
+        data : [
+          {
+            id: 'uuid',
+            name: 'string',
+            createdAt: '1990-01-01T01:01:01.000Z',
+            updatedAt: '1990-01-01T01:01:01.000Z'
+          }
+        ]
       }
     }
   */
-  res.send('Get User')
-}
+  const users = await User.findAll() //eslint-disable-line
+
+  res.Return200(users)
+})
