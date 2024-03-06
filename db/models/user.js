@@ -16,12 +16,28 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       primaryKey: true,
       allowNull: false,
-      type: DataTypes.UUID,
+      type: DataTypes.STRING(15),
       field: 'id'
     },
     name: {
       type: DataTypes.STRING,
       field: 'name'
+    },
+    username: {
+      allowNull: false,
+      type: DataTypes.STRING(50),
+      field: 'username'
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING(20),
+      field: 'password'
+    },
+    isActive: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      field: 'is_active'
     },
     createdAt: {
       allowNull: false,
