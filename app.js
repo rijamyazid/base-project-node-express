@@ -6,9 +6,10 @@ const logger = require('morgan')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger-output.json')
 
-const responseService = require('./app/services/response-service')
+const responseService = require('./app/middlewares/response-mid')
 
 const indexRouter = require('./routes/index')
+const authRouter = require('./routes/auth-router')
 const usersRouter = require('./routes/user-router')
 
 const app = express()
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(responseService)
 
 app.use('/', indexRouter)
+app.use('/auth', authRouter)
 app.use('/users', usersRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 

@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const { Op } = require('sequelize')
 const { User } = require('../../db/models')
 const catchAsync = require('../services/catch-function-error-service')
@@ -8,7 +6,7 @@ const HTTPStatusCode = require('../enums/http-status-code-enum') //eslint-disabl
 
 exports.getUsers = catchAsync(async (req, res) => {
   /*
-    #swagger.tags = ['Base']
+    #swagger.tags = ['Users']
     #swagger.description = 'Endpoint to get list of user'
 
     #swagger.responses[200] = {
@@ -31,12 +29,12 @@ exports.getUsers = catchAsync(async (req, res) => {
   */
   const users = await User.findAll()
 
-  res.Return200(users)
+  return res.ReturnOk(users)
 })
 
 exports.getUserById = catchAsync(async (req, res) => {
   /*
-    #swagger.tags = ['Base']
+    #swagger.tags = ['Users']
     #swagger.description = 'Endpoint to get user by id'
 
     #swagger.responses[200] = {
@@ -59,7 +57,7 @@ exports.getUserById = catchAsync(async (req, res) => {
   */
   const reqId = req.params.id
   if (!reqId) {
-    res.ReturnError(HTTPStatusCode.BadRequest, 'There is no user id')
+    return res.ReturnError(HTTPStatusCode.BadRequest, 'There is no user id')
   }
 
   const user = await User.findAll({
@@ -71,12 +69,12 @@ exports.getUserById = catchAsync(async (req, res) => {
     }
   })
 
-  res.Return200(user)
+  return res.ReturnOk(user)
 })
 
 exports.addUser = catchAsync(async (req, res) => {
   /*
-    #swagger.tags = ['Base']
+    #swagger.tags = ['Users']
     #swagger.description = 'Endpoint to create new user'
     #swagger.parameters['body'] = {
       in: 'body',
@@ -105,7 +103,7 @@ exports.addUser = catchAsync(async (req, res) => {
   const { name: reqName, username: reqUsername, password: reqPassword } = req.body
 
   if (!reqUsername || !reqPassword) {
-    res.ReturnError(HTTPStatusCode.BadRequest, 'There is no username or password')
+    return res.ReturnError(HTTPStatusCode.BadRequest, 'There is no username or password')
   }
 
   const date = new Date()
@@ -141,15 +139,15 @@ exports.addUser = catchAsync(async (req, res) => {
   })
 
   if (!user) {
-    res.ReturnError(HTTPStatusCode.ServerError, 'Failed creating new user')
+    return res.ReturnError(HTTPStatusCode.ServerError, 'Failed creating new user')
   }
 
-  res.Return200(user)
+  return res.ReturnOk({ data: user })
 })
 
 exports.updateUserbyId = catchAsync(async (req, res) => {
   /*
-    #swagger.tags = ['Base']
+    #swagger.tags = ['Users']
     #swagger.description = 'Endpoint to update user by id'
     #swagger.parameters['body'] = {
       in: 'body',
@@ -186,11 +184,11 @@ exports.updateUserbyId = catchAsync(async (req, res) => {
       await user.update({ id: reqId })
       await user.save()
     } catch (error) {
-      res.ReturnError(HTTPStatusCode.BadRequest, error)
+      return res.ReturnError(HTTPStatusCode.BadRequest, error)
     }
   } else {
-    res.ReturnError(HTTPStatusCode.BadRequest, `There is no user with id ${reqId}`)
+    return res.ReturnError(HTTPStatusCode.BadRequest, `There is no user with id ${reqId}`)
   }
 
-  res.Return200(null, 'User data has been updated')
+  return res.ReturnOk(null, 'User data has been updated')
 })

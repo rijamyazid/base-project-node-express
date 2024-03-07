@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "start": "node ./bin/www",
+    "start": "node ./swagger.js",
     "swagger": "node ./swagger.js"
   },
   "dependencies": {

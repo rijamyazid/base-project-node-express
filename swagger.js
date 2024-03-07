@@ -5,9 +5,9 @@ const options = {
   openapi: null, // Enable/Disable OpenAPI. By default is null
   language: 'en-US', // Change response language. By default is 'en-US'
   disableLogs: false, // Enable/Disable logs. By default is false
-  autoHeaders: true, // Enable/Disable automatic headers capture. By default is true
-  autoQuery: true, // Enable/Disable automatic query capture. By default is true
-  autoBody: true // Enable/Disable automatic body capture. By default is true
+  autoHeaders: false, // Enable/Disable automatic headers capture. By default is true
+  autoQuery: false, // Enable/Disable automatic query capture. By default is true
+  autoBody: false // Enable/Disable automatic body capture. By default is true
 }
 
 const swaggerAutogen = require('swagger-autogen')(options)
@@ -25,15 +25,29 @@ const doc = {
   produces: ['application/json'], // by default: ['application/json']
   tags: [ // by default: empty Array
     {
-      name: 'Base', // Tag name
-      description: 'Base related APIs' // Tag description
+      name: 'Auth',
+      description: 'Authorization related APIs'
+    },
+    {
+      name: 'Users', // Tag name
+      description: 'Users related APIs' // Tag description
     }
   ],
-  securityDefinitions: {}, // by default: empty object
+  securityDefinitions: {
+    bearerAuth: {
+      type: 'apiKey',
+      name: 'authorization',
+      scheme: 'bearer',
+      in: 'header'
+    }
+  }, // by default: empty object
+  security: [{ bearerAuth: [] }],
   definitions: {} // by default: empty object
 }
 
 const outputFile = './swagger-output.json'
 const routes = ['./app.js']
 
-swaggerAutogen(outputFile, routes, doc)
+swaggerAutogen(outputFile, routes, doc).then(() => {
+  require('./bin/www')
+})
