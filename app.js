@@ -1,5 +1,6 @@
 const createError = require('http-errors')
 const express = require('express')
+const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
@@ -8,7 +9,6 @@ const swaggerDocument = require('./swagger-output.json')
 
 const responseService = require('./app/middlewares/response-mid')
 
-const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth-router')
 const usersRouter = require('./routes/user-router')
 
@@ -20,10 +20,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(responseService)
+app.use(cors())
 
-app.use('/', indexRouter)
-app.use('/auth', authRouter)
-app.use('/users', usersRouter)
+app.use('/v1/auth', authRouter)
+app.use('/v1/users', usersRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // catch 404 and forward to error handler

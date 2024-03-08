@@ -15,11 +15,11 @@ exports.getUsers = catchAsync(async (req, res) => {
         messages : ['string'],
         data : [
           {
-            isActive: true,
             id: 'string',
             name: 'string',
             username: 'string',
             password: 'string',
+            isActive: true,
             createdAt: '1990-01-01T01:01:01.000Z',
             updatedAt: '1990-01-01T01:01:01.000Z'
           }
