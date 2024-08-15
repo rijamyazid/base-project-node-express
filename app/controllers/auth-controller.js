@@ -4,7 +4,7 @@ const { Op } = require('sequelize')
 const { User } = require('../../db/models')
 const catchAsync = require('../services/catch-function-error-service')
 const HTTPStatusCode = require('../enums/http-status-code-enum')
-
+//TEST
 exports.login = catchAsync(async (req, res) => {
   /*
     #swagger.tags = ['Auth']
