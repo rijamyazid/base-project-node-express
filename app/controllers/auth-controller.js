@@ -57,4 +57,6 @@ exports.login = catchAsync(async (req, res) => {
     token: _token,
     payload: _payload
   })
+  
+  //Test
 })
