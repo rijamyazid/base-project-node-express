@@ -4,7 +4,7 @@ const requireAuth = require('../app/middlewares/auth-mid')
 
 const router = express.Router()
 
-router.get('/', requireAuth, userController.getUsers)
+router.get('/', userController.getUsers)
 router.get('/:id', requireAuth, userController.getUserById)
 router.post('/', requireAuth, userController.addUser)
 router.put('/:id', requireAuth, userController.updateUserbyId)

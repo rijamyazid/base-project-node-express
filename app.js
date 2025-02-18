@@ -22,8 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(responseService)
 app.use(cors())
 
-app.use('/v1/auth', authRouter)
-app.use('/v1/users', usersRouter)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', usersRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // catch 404 and forward to error handler
