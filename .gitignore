@@ -3,7 +3,3 @@
 .env
 .env.local
 .env.server
-
-package-lock.json
-
-swagger-output.json
